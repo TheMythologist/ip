@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Yorm {
@@ -16,6 +15,42 @@ public class Yorm {
                 break;
             } else if (string.equals("list")) {
                 bot.printTexts();
+            } else if (string.startsWith("mark ")) {
+                String[] split = string.split(" ");
+                if (split.length != 2) {
+                    System.out.println("Error in mark instruction");
+                    continue;
+                }
+
+                int index;
+                try {
+                    index = Integer.parseInt(split[1]);
+                    bot.markTaskAsDone(index - 1);
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                    System.out.println("Error in mark instruction");
+                    continue;
+                }
+
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println(bot.getTask(index - 1));
+            } else if (string.startsWith("unmark ")) {
+                String[] split = string.split(" ");
+                if (split.length != 2) {
+                    System.out.println("Error in mark instruction");
+                    continue;
+                }
+
+                int index;
+                try {
+                    index = Integer.parseInt(split[1]);
+                    bot.markTaskAsNotDone(index - 1);
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                    System.out.println("Error in mark instruction");
+                    continue;
+                }
+
+                System.out.println("Nice! I've marked this task as not done yet:");
+                System.out.println(bot.getTask(index - 1));
             } else {
                 bot.addText(string);
             }
@@ -23,22 +58,5 @@ public class Yorm {
 
         System.out.println("Bye. Hope to see you again soon!");
         s.close();
-    }
-}
-
-class Chatbot {
-    private ArrayList<String> texts = new ArrayList<>();
-
-    public void addText(String string) {
-        this.texts.add(string);
-        System.out.println(String.format("added: %s", string));
-    }
-
-    public void printTexts() {
-        int counter = 1;
-        for (String string : this.texts) {
-            System.out.println(String.format("%d. %s", counter, string));
-            counter++;
-        }
     }
 }
