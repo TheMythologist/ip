@@ -1,4 +1,6 @@
 import java.util.Objects;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public abstract class Task {
     protected String description;
@@ -31,26 +33,31 @@ public abstract class Task {
     public static Task fromSaveString(String string) throws YormException {
         Task task;
         String[] split = string.split(" \\| ");
-        switch (split[0]) {
-            case "T" -> {
-                if (split.length != 3) {
-                    throw new YormException("Invalid todo save string");
+        try {
+
+            switch (split[0]) {
+                case "T" -> {
+                    if (split.length != 3) {
+                        throw new YormException("Invalid todo save string");
+                    }
+                    task = new Todo(split[2]);
                 }
-                task = new Todo(split[2]);
-            }
-            case "D" -> {
-                if (split.length != 4) {
-                    throw new YormException("Invalid deadline save string");
+                case "D" -> {
+                    if (split.length != 4) {
+                        throw new YormException("Invalid deadline save string");
+                    }
+                    task = new Deadline(split[2], LocalDate.parse(split[3]));
                 }
-                task = new Deadline(split[2], split[3]);
-            }
-            case "E" -> {
-                if (split.length != 5) {
-                    throw new YormException("Invalid event save string");
+                case "E" -> {
+                    if (split.length != 5) {
+                        throw new YormException("Invalid event save string");
+                    }
+                    task = new Event(split[2], LocalDate.parse(split[3]), LocalDate.parse(split[4]));
                 }
-                task = new Event(split[2], split[3], split[4]);
+                case null, default -> throw new YormException("Invalid save string");
             }
-            case null, default -> throw new YormException("Invalid save string");
+        } catch (DateTimeParseException _) {
+            throw new YormException("Invalid save string");
         }
         if (Objects.equals(split[1], "1")) {
             task.markAsDone();

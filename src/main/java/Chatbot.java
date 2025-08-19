@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -157,7 +158,7 @@ public class Chatbot {
                         if (split.length != 2) {
                             throw new YormException("Error in deadline instruction");
                         }
-                        task = new Deadline(split[0], split[1]);
+                        task = new Deadline(split[0], LocalDate.parse(split[1]));
                     } else if (string.startsWith("event ")) {
                         String toParse = removePrefix(string, "event ");
                         String[] split = toParse.split(" /from ");
@@ -168,7 +169,7 @@ public class Chatbot {
                         if (split2.length != 2) {
                             throw new YormException("Error in event instruction");
                         }
-                        task = new Event(split[0], split2[0], split2[1]);
+                        task = new Event(split[0], LocalDate.parse(split2[0]), LocalDate.parse(split2[1]));
                     } else {
                         throw new YormException("Invalid instruction");
                     }
