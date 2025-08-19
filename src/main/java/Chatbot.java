@@ -8,6 +8,10 @@ public class Chatbot {
         this.tasks.add(task);
     }
 
+    public Task deleteTask(int index) {
+        return this.tasks.remove(index);
+    }
+
     public void printTasks() {
         int counter = 1;
         for (Task task : this.tasks) {
@@ -52,6 +56,22 @@ public class Chatbot {
                     break;
                 } else if (string.equals("list")) {
                     this.printTasks();
+                } else if (string.startsWith("delete ")) {
+                    String[] split = string.split(" ");
+                    if (split.length != 2) {
+                        throw new YormException("Error in delete instruction");
+                    }
+
+                    try {
+                        int index = Integer.parseInt(split[1]);
+                        Task deletedTask = this.deleteTask(index - 1);
+                        System.out.println("Noted. I've removed this task:");
+                        System.out.println(deletedTask);
+                        System.out.println(String.format("Now you have %d tasks in the list.", this.getTaskLength()));
+                    } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                        throw new YormException("Error in delete instruction");
+                    }
+
                 } else if (string.startsWith("mark ")) {
                     String[] split = string.split(" ");
                     if (split.length != 2) {

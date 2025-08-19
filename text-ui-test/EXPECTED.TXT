@@ -39,4 +39,10 @@ Error in mark instruction
 Error in unmark instruction
 Error in mark instruction
 Error in unmark instruction
+Noted. I've removed this task:
+[T][X] read book
+Now you have 7 tasks in the list.
+Error in delete instruction
+Error in delete instruction
+Error in delete instruction
 Bye. Hope to see you again soon!
