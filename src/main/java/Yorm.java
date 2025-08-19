@@ -1,6 +1,6 @@
 public class Yorm {
     public static void main(String[] args) {
-        Chatbot bot = new Chatbot();
+        Chatbot bot = Chatbot.readFromFile();
         bot.eventLoop();
     }
 }

@@ -1,31 +1,44 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Chatbot {
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private final ArrayList<Task> tasks;
+
+    public Chatbot() {
+        this.tasks = new ArrayList<>();
+    }
 
     public void addTask(Task task) {
         this.tasks.add(task);
+        this.saveToFile();
     }
 
     public Task deleteTask(int index) {
-        return this.tasks.remove(index);
+        Task task = this.tasks.remove(index);
+        this.saveToFile();
+        return task;
     }
 
     public void printTasks() {
         int counter = 1;
         for (Task task : this.tasks) {
-            System.out.println(String.format("%d.%s", counter, task));
+            System.out.printf("%d.%s%n", counter, task);
             counter++;
         }
     }
 
     public void markTaskAsDone(int index) {
         this.tasks.get(index).markAsDone();
+        this.saveToFile();
     }
 
     public void markTaskAsNotDone(int index) {
         this.tasks.get(index).markAsNotDone();
+        this.saveToFile();
     }
 
     public Task getTask(int index) {
@@ -41,6 +54,36 @@ public class Chatbot {
             return s.split(prefix, 2)[1];
         }
         return s;
+    }
+
+    public void saveToFile() {
+        try {
+            File file = new File("data");
+            file.mkdir();
+            FileWriter fileWriter = new FileWriter("data/yorm.txt");
+            for (Task task : this.tasks) {
+                fileWriter.write(String.format("%s\n", task.toSaveString()));
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("Error saving to file");
+        }
+    }
+
+    public static Chatbot readFromFile() {
+        Chatbot bot = new Chatbot();
+        File file = new File("data/yorm.txt");
+        try (Scanner reader = new Scanner(file)) {
+            while (reader.hasNextLine()) {
+                String taskString = reader.nextLine();
+                bot.addTask(Task.fromSaveString(taskString));
+            }
+        } catch (FileNotFoundException _) {
+        } catch (YormException e) {
+            System.out.println("Error parsing save file, creating backup file...");
+            file.renameTo(new File("data/yorm.txt.bak"));
+        }
+        return bot;
     }
 
     public void eventLoop() {
@@ -67,7 +110,7 @@ public class Chatbot {
                         Task deletedTask = this.deleteTask(index - 1);
                         System.out.println("Noted. I've removed this task:");
                         System.out.println(deletedTask);
-                        System.out.println(String.format("Now you have %d tasks in the list.", this.getTaskLength()));
+                        System.out.printf("Now you have %d tasks in the list.%n", this.getTaskLength());
                     } catch (NumberFormatException | IndexOutOfBoundsException e) {
                         throw new YormException("Error in delete instruction");
                     }
@@ -132,11 +175,10 @@ public class Chatbot {
                     this.addTask(task);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(task);
-                    System.out.println(String.format("Now you have %d tasks in the list", this.getTaskLength()));
+                    System.out.printf("Now you have %d tasks in the list%n", this.getTaskLength());
                 }
             } catch (YormException e) {
                 System.out.println(e.getMessage());
-                continue;
             }
         }
 
