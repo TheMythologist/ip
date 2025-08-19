@@ -46,80 +46,77 @@ public class Chatbot {
         System.out.println("What can I do for you?");
 
         while (true) {
-            String string = s.nextLine();
-            if (string.equals("bye")) {
-                break;
-            } else if (string.equals("list")) {
-                this.printTasks();
-            } else if (string.startsWith("mark ")) {
-                String[] split = string.split(" ");
-                if (split.length != 2) {
-                    System.out.println("Error in mark instruction");
-                    continue;
-                }
-
-                int index;
-                try {
-                    index = Integer.parseInt(split[1]);
-                    this.markTaskAsDone(index - 1);
-                } catch (NumberFormatException | IndexOutOfBoundsException e) {
-                    System.out.println("Error in mark instruction");
-                    continue;
-                }
-
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println(this.getTask(index - 1));
-            } else if (string.startsWith("unmark ")) {
-                String[] split = string.split(" ");
-                if (split.length != 2) {
-                    System.out.println("Error in unmark instruction");
-                    continue;
-                }
-
-                int index;
-                try {
-                    index = Integer.parseInt(split[1]);
-                    this.markTaskAsNotDone(index - 1);
-                } catch (NumberFormatException | IndexOutOfBoundsException e) {
-                    System.out.println("Error in unmark instruction");
-                    continue;
-                }
-
-                System.out.println("Nice! I've marked this task as not done yet:");
-                System.out.println(this.getTask(index - 1));
-            } else {
-                Task task;
-                if (string.startsWith("todo ")) {
-                    task = new Todo(removePrefix(string, "todo "));
-                } else if (string.startsWith("deadline ")) {
-                    String toParse = removePrefix(string, "deadline ");
-                    String[] split = toParse.split(" /by ");
+            try {
+                String string = s.nextLine();
+                if (string.equals("bye")) {
+                    break;
+                } else if (string.equals("list")) {
+                    this.printTasks();
+                } else if (string.startsWith("mark ")) {
+                    String[] split = string.split(" ");
                     if (split.length != 2) {
-                        System.out.println("Error in deadline instruction");
-                        continue;
+                        throw new YormException("Error in mark instruction");
                     }
-                    task = new Deadline(split[0], split[1]);
-                } else if (string.startsWith("event ")) {
-                    String toParse = removePrefix(string, "event ");
-                    String[] split = toParse.split(" /from ");
+
+                    int index;
+                    try {
+                        index = Integer.parseInt(split[1]);
+                        this.markTaskAsDone(index - 1);
+                    } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                        throw new YormException("Error in mark instruction");
+                    }
+
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println(this.getTask(index - 1));
+                } else if (string.startsWith("unmark ")) {
+                    String[] split = string.split(" ");
                     if (split.length != 2) {
-                        System.out.println("Error in event instruction");
-                        continue;
+                        throw new YormException("Error in unmark instruction");
                     }
-                    String[] split2 = split[1].split(" /to ");
-                    if (split2.length != 2) {
-                        System.out.println("Error in event instruction");
-                        continue;
+
+                    int index;
+                    try {
+                        index = Integer.parseInt(split[1]);
+                        this.markTaskAsNotDone(index - 1);
+                    } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                        throw new YormException("Error in unmark instruction");
                     }
-                    task = new Event(split[0], split2[0], split2[1]);
+
+                    System.out.println("Nice! I've marked this task as not done yet:");
+                    System.out.println(this.getTask(index - 1));
                 } else {
-                    System.out.println("Invalid instruction");
-                    continue;
+                    Task task;
+                    if (string.startsWith("todo ")) {
+                        task = new Todo(removePrefix(string, "todo "));
+                    } else if (string.startsWith("deadline ")) {
+                        String toParse = removePrefix(string, "deadline ");
+                        String[] split = toParse.split(" /by ");
+                        if (split.length != 2) {
+                            throw new YormException("Error in deadline instruction");
+                        }
+                        task = new Deadline(split[0], split[1]);
+                    } else if (string.startsWith("event ")) {
+                        String toParse = removePrefix(string, "event ");
+                        String[] split = toParse.split(" /from ");
+                        if (split.length != 2) {
+                            throw new YormException("Error in event instruction");
+                        }
+                        String[] split2 = split[1].split(" /to ");
+                        if (split2.length != 2) {
+                            throw new YormException("Error in event instruction");
+                        }
+                        task = new Event(split[0], split2[0], split2[1]);
+                    } else {
+                        throw new YormException("Invalid instruction");
+                    }
+                    this.addTask(task);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(task);
+                    System.out.println(String.format("Now you have %d tasks in the list", this.getTaskLength()));
                 }
-                this.addTask(task);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(task);
-                System.out.println(String.format("Now you have %d tasks in the list", this.getTaskLength()));
+            } catch (YormException e) {
+                System.out.println(e.getMessage());
+                continue;
             }
         }
 
