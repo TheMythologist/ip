@@ -1,4 +1,8 @@
+package yorm.tasklist;
+
 import java.util.ArrayList;
+
+import yorm.task.Task;
 
 public class TaskList extends ArrayList<Task> {
     public TaskList() {

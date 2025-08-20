@@ -1,6 +1,10 @@
+package yorm.task;
+
 import java.util.Objects;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+
+import yorm.exception.YormException;
 
 public abstract class Task {
     protected String description;
@@ -28,7 +32,7 @@ public abstract class Task {
         return String.format("[%s] %s", this.getStatusIcon(), this.description);
     }
 
-    abstract String toSaveString();
+    public abstract String toSaveString();
 
     public static Task fromSaveString(String string) throws YormException {
         Task task;

@@ -1,4 +1,9 @@
+package yorm.ui;
+
 import java.util.Scanner;
+
+import yorm.task.Task;
+import yorm.tasklist.TaskList;
 
 public class Ui implements AutoCloseable {
     Scanner s = new Scanner(System.in);
