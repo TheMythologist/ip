@@ -1,45 +1,87 @@
 Hello! I'm Yorm!
 What can I do for you?
+____________________________________________________________
 Got it. I've added this task:
 [T][ ] read book
 Now you have 1 tasks in the list
+____________________________________________________________
+____________________________________________________________
 Nice! I've marked this task as done:
 [T][X] read book
+____________________________________________________________
+____________________________________________________________
 Got it. I've added this task:
 [D][ ] return book (by: Jun 6 2026)
-Now you have 2 tasks in the list
+Now you have 2 task in the list
+____________________________________________________________
+____________________________________________________________
 Got it. I've added this task:
 [E][ ] project meeting (from: Aug 6 2026 to: Aug 7 2026)
-Now you have 3 tasks in the list
+Now you have 3 task in the list
+____________________________________________________________
+____________________________________________________________
 Got it. I've added this task:
 [T][ ] join sports club
-Now you have 4 tasks in the list
+Now you have 4 task in the list
+____________________________________________________________
+____________________________________________________________
 Nice! I've marked this task as done:
 [T][X] join sports club
+____________________________________________________________
+____________________________________________________________
 Got it. I've added this task:
 [T][ ] borrow book
-Now you have 5 tasks in the list
+Now you have 5 task in the list
+____________________________________________________________
+____________________________________________________________
 1.[T][X] read book
 2.[D][ ] return book (by: Jun 6 2026)
 3.[E][ ] project meeting (from: Aug 6 2026 to: Aug 7 2026)
 4.[T][X] join sports club
 5.[T][ ] borrow book
+____________________________________________________________
+____________________________________________________________
 Got it. I've added this task:
 [D][ ] return book (by: Jul 6 2026)
-Now you have 6 tasks in the list
+Now you have 6 task in the list
+____________________________________________________________
+____________________________________________________________
 Got it. I've added this task:
 [E][ ] project meeting (from: Jul 1 2026 to: Jul 2 2026)
-Now you have 7 tasks in the list
-Error in mark instruction
-Error in unmark instruction
-Error in mark instruction
-Error in unmark instruction
-Error in mark instruction
-Error in unmark instruction
+Now you have 7 task in the list
+____________________________________________________________
+____________________________________________________________
+YormError: Invalid task number
+____________________________________________________________
+____________________________________________________________
+YormError: Invalid task number
+____________________________________________________________
+____________________________________________________________
+YormError: Invalid task number
+____________________________________________________________
+____________________________________________________________
+YormError: Invalid task number
+____________________________________________________________
+____________________________________________________________
+YormError: Invalid task number
+____________________________________________________________
+____________________________________________________________
+YormError: Invalid task number
+____________________________________________________________
+____________________________________________________________
 Noted. I've removed this task:
 [T][X] read book
-Now you have 6 tasks in the list.
-Error in delete instruction
-Error in delete instruction
-Error in delete instruction
+Now you have 6 task in the list.
+____________________________________________________________
+____________________________________________________________
+YormError: Invalid task number
+____________________________________________________________
+____________________________________________________________
+YormError: Invalid task number
+____________________________________________________________
+____________________________________________________________
+YormError: Invalid task number
+____________________________________________________________
+____________________________________________________________
 Bye. Hope to see you again soon!
+____________________________________________________________
