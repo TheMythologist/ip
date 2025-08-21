@@ -7,11 +7,19 @@ import yorm.storage.Storage;
 import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
+/**
+ * Base chatbot application.
+ */
 public class Yorm {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Creates the {@code Yorm} application.
+     *
+     * @param filePath The filepath to read the save file from.
+     */
     public Yorm(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -23,6 +31,9 @@ public class Yorm {
         }
     }
 
+    /**
+     * The main event loop of the {@code Yorm} application.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;

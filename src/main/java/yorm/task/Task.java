@@ -1,16 +1,24 @@
 package yorm.task;
 
-import java.util.Objects;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 import yorm.exception.YormException;
 
+/**
+ * Base abstract class for all tasks to extend from.
+ */
 public abstract class Task {
     /** The description of the task */
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Creates a basic {@code Task}.
+     *
+     * @param description Description of the task.
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
@@ -23,7 +31,7 @@ public abstract class Task {
     /**
      * Returns the status icon of the task.
      * Returns X if it is done, else returns a whitespace character.
-     * 
+     *
      * @return The status icon of the task.
      */
     public String getStatusIcon() {
@@ -51,11 +59,18 @@ public abstract class Task {
 
     /**
      * Returns the save string of the task, used when saving tasks to the disk.
-     * 
+     *
      * @return The save string of the task.
      */
     public abstract String toSaveString();
 
+    /**
+     * Loads a task from save string, used when loading tasks from the disk.
+     *
+     * @param string The save string of the task.
+     * @return The task parsed from the save string.
+     * @throws YormException If an error occurs during the parsing of the save string.
+     */
     public static Task fromSaveString(String string) throws YormException {
         Task task;
         String[] split = string.split(" \\| ");
@@ -93,8 +108,7 @@ public abstract class Task {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Task) {
-            Task other = (Task) o;
+        if (o instanceof Task other) {
             return this.toSaveString().equals(other.toSaveString());
         }
         return false;

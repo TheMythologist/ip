@@ -6,6 +6,9 @@ import yorm.task.Task;
 import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
+/**
+ * Command to delete a task from existing tasks.
+ */
 public class DeleteCommand extends Command {
     /** Index of task to be deleted */
     protected final int taskIndex;

@@ -5,6 +5,9 @@ import yorm.task.Task;
 import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
+/**
+ * Command to add a task to existing tasks.
+ */
 public class AddCommand extends Command {
     /** Task to be added */
     protected final Task task;
