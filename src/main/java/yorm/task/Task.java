@@ -16,6 +16,10 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
     /**
      * Returns the status icon of the task.
      * Returns X if it is done, else returns a whitespace character.
