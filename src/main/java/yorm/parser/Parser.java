@@ -16,6 +16,14 @@ import yorm.task.Task;
 import yorm.task.Todo;
 
 public class Parser {
+    /**
+     * Helper function to remove a prefix from a string.
+     * If the string does not start with the prefix, the same string is returned.
+     * 
+     * @param s The string to remove the prefix from.
+     * @param prefix The prefix to be removed.
+     * @return The string after prefix removal.
+     */
     public static String removePrefix(String s, String prefix) {
         if (s != null && s.startsWith(prefix)) {
             return s.split(prefix, 2)[1];
@@ -23,6 +31,13 @@ public class Parser {
         return s;
     }
 
+    /**
+     * Parses the string and returns the corresponding command to be executed.
+     * 
+     * @param command The string to be parsed into a command.
+     * @return The command for the application to execute.
+     * @throws YormException If an error occurs during parsing of the string.
+     */
     public static Command parse(String command) throws YormException {
         if (command.equals("bye")) {
             return new ExitCommand();
