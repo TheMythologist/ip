@@ -68,4 +68,13 @@ public abstract class Task {
         }
         return task;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Task) {
+            Task other = (Task) o;
+            return this.toSaveString().equals(other.toSaveString());
+        }
+        return false;
+    }
 }

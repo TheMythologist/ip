@@ -7,8 +7,8 @@ import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
 public class MarkCommand extends Command {
-    private final int taskIndex;
-    private final boolean done;
+    public final int taskIndex;
+    public final boolean done;
 
     public MarkCommand(int taskIndex, boolean done) {
         this.taskIndex = taskIndex;
@@ -37,5 +37,14 @@ public class MarkCommand extends Command {
             ui.showUnmarkedTask(task);
         }
         storage.save(tasks);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (super.equals(o)) {
+            MarkCommand other = (MarkCommand) o;
+            return this.taskIndex == other.taskIndex && this.done == other.done;
+        }
+        return false;
     }
 }

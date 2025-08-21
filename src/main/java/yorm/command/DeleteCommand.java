@@ -7,7 +7,7 @@ import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
 public class DeleteCommand extends Command {
-    private final int taskIndex;
+    public final int taskIndex;
 
     public DeleteCommand(int taskIndex) {
         this.taskIndex = taskIndex;
@@ -28,5 +28,14 @@ public class DeleteCommand extends Command {
         }
         ui.showDeletedTask(task, tasks);
         storage.save(tasks);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (super.equals(o)) {
+            DeleteCommand other = (DeleteCommand) o;
+            return this.taskIndex == other.taskIndex;
+        }
+        return false;
     }
 }

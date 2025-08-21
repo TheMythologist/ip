@@ -1,6 +1,7 @@
 package yorm.parser;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import yorm.command.AddCommand;
 import yorm.command.Command;
@@ -35,6 +36,9 @@ public class Parser {
 
             try {
                 int index = Integer.parseInt(split[1]);
+                if (index < 1) {
+                    throw new YormException("Error in mark instruction");
+                }
                 return new DeleteCommand(index - 1);
             } catch (NumberFormatException e) {
                 throw new YormException("Error in delete instruction");
@@ -48,6 +52,9 @@ public class Parser {
             int index;
             try {
                 index = Integer.parseInt(split[1]);
+                if (index < 1) {
+                    throw new YormException("Error in mark instruction");
+                }
                 return new MarkCommand(index - 1, true);
             } catch (NumberFormatException e) {
                 throw new YormException("Error in mark instruction");
@@ -61,6 +68,9 @@ public class Parser {
             int index;
             try {
                 index = Integer.parseInt(split[1]);
+                if (index < 1) {
+                    throw new YormException("Error in mark instruction");
+                }
                 return new MarkCommand(index - 1, false);
             } catch (NumberFormatException e) {
                 throw new YormException("Error in unmark instruction");
@@ -75,7 +85,11 @@ public class Parser {
                 if (split.length != 2) {
                     throw new YormException("Error in deadline instruction");
                 }
-                task = new Deadline(split[0], LocalDate.parse(split[1]));
+                try {
+                    task = new Deadline(split[0], LocalDate.parse(split[1]));
+                } catch (DateTimeParseException e) {
+                    throw new YormException("Error in deadline instruction");
+                }
             } else if (command.startsWith("event ")) {
                 String toParse = removePrefix(command, "event ");
                 String[] split = toParse.split(" /from ");
@@ -86,7 +100,11 @@ public class Parser {
                 if (split2.length != 2) {
                     throw new YormException("Error in event instruction");
                 }
-                task = new Event(split[0], LocalDate.parse(split2[0]), LocalDate.parse(split2[1]));
+                try {
+                    task = new Event(split[0], LocalDate.parse(split2[0]), LocalDate.parse(split2[1]));
+                } catch (DateTimeParseException e) {
+                    throw new YormException("Error in event instruction");
+                }
             } else {
                 throw new YormException("Invalid instruction");
             }

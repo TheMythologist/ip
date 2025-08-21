@@ -6,7 +6,7 @@ import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
 public class AddCommand extends Command {
-    private final Task task;
+    public final Task task;
 
     public AddCommand(Task task) {
         this.task = task;
@@ -22,5 +22,14 @@ public class AddCommand extends Command {
         tasks.add(this.task);
         ui.showAddedTask(task, tasks);
         storage.save(tasks);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (super.equals(o)) {
+            AddCommand other = (AddCommand) o;
+            return this.task.equals(other.task);
+        }
+        return false;
     }
 }
