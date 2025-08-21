@@ -6,6 +6,7 @@ import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
 public class AddCommand extends Command {
+    /** Task to be added */
     public final Task task;
 
     public AddCommand(Task task) {

@@ -7,6 +7,7 @@ import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
 public class DeleteCommand extends Command {
+    /** Index of task to be deleted */
     public final int taskIndex;
 
     public DeleteCommand(int taskIndex) {

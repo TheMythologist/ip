@@ -11,12 +11,19 @@ import yorm.exception.YormException;
 import yorm.task.Task;
 
 public class Storage {
+    /** The save file location */
     private final String filePath;
 
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads the tasks from the filepath.
+     * 
+     * @return The tasks loaded from the save file.
+     * @throws YormException If an error occurs during loading of the save file.
+     */
     public ArrayList<Task> load() throws YormException {
         File file = new File(this.filePath);
 
@@ -32,6 +39,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Save the tasks into the filepath
+     */
     public void save(ArrayList<Task> tasks) {
         try {
             File file = new File(this.filePath);
