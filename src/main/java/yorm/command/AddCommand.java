@@ -7,7 +7,7 @@ import yorm.ui.Ui;
 
 public class AddCommand extends Command {
     /** Task to be added */
-    public final Task task;
+    protected final Task task;
 
     public AddCommand(Task task) {
         this.task = task;

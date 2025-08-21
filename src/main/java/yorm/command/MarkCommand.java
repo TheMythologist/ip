@@ -8,10 +8,10 @@ import yorm.ui.Ui;
 
 public class MarkCommand extends Command {
     /** Index of task to be marked */
-    public final int taskIndex;
+    protected final int taskIndex;
 
     /** Whether the task should be marked as done or not done */
-    public final boolean done;
+    protected final boolean done;
 
     public MarkCommand(int taskIndex, boolean done) {
         this.taskIndex = taskIndex;
