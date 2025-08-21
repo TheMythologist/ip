@@ -5,6 +5,9 @@ import yorm.task.Task;
 import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
+/**
+ * Command to find a task from existing tasks.
+ */
 public class FindCommand extends Command {
     /** The keyword to search in the tasks */
     protected final String keyword;

@@ -6,6 +6,9 @@ import yorm.task.Task;
 import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
+/**
+ * Command to mark a task as done or not done.
+ */
 public class MarkCommand extends Command {
     /** Index of task to be marked */
     protected final int taskIndex;
@@ -13,6 +16,14 @@ public class MarkCommand extends Command {
     /** Whether the task should be marked as done or not done */
     protected final boolean done;
 
+    /**
+     * Creates a new {@code MarkCommand} that will mark a specified task
+     * as either done or not done.
+     *
+     * @param taskIndex Index of task to be marked.
+     * @param done {@code true} If the task should be marked as done,
+     *             {@code false} if it should be marked as not done.
+     */
     public MarkCommand(int taskIndex, boolean done) {
         this.taskIndex = taskIndex;
         this.done = done;

@@ -5,6 +5,9 @@ import yorm.storage.Storage;
 import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
+/**
+ * Base abstract class for all commands to extend from.
+ */
 public abstract class Command {
     /**
      * Returns if the command is an exit command.

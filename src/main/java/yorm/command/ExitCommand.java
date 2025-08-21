@@ -4,6 +4,9 @@ import yorm.storage.Storage;
 import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
+/**
+ * Command to exit the application.
+ */
 public class ExitCommand extends Command {
     @Override
     public boolean isExit() {

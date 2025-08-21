@@ -1,7 +1,14 @@
 package yorm.parser;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
+import yorm.command.AddCommand;
 import yorm.command.Command;
 import yorm.command.DeleteCommand;
 import yorm.command.ExitCommand;
@@ -9,16 +16,9 @@ import yorm.command.FindCommand;
 import yorm.command.ListCommand;
 import yorm.command.MarkCommand;
 import yorm.exception.YormException;
-import yorm.command.AddCommand;
 import yorm.task.Deadline;
 import yorm.task.Event;
 import yorm.task.Todo;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.time.LocalDate;
 
 public class ParserTest {
     @Test
@@ -35,8 +35,13 @@ public class ParserTest {
 
     @Test
     public void parser_addEvent_correctCommand() {
-        Command command = assertDoesNotThrow(() -> Parser.parse("event project meeting /from 2026-08-06 /to 2026-08-07"));
-        assertEquals(new AddCommand(new Event("project meeting", LocalDate.of(2026, 8, 6), LocalDate.of(2026, 8, 7))), command);
+        Command command = assertDoesNotThrow(() ->
+            Parser.parse("event project meeting /from 2026-08-06 /to 2026-08-07"));
+        assertEquals(new AddCommand(new Event(
+            "project meeting",
+            LocalDate.of(2026, 8, 6),
+            LocalDate.of(2026, 8, 7)
+        )), command);
     }
 
     @Test
@@ -69,9 +74,10 @@ public class ParserTest {
         assertEquals(new MarkCommand(0, false), command);
     }
 
+    @Test
     public void parser_find_correctCommand() {
         Command command = assertDoesNotThrow(() -> Parser.parse("find task"));
-        assertEquals(command, new FindCommand("task"));
+        assertEquals(new FindCommand("task"), command);
     }
 
     @Test
@@ -103,13 +109,17 @@ public class ParserTest {
     @Test
     public void parser_invalidDeadline_exceptionThrown() {
         assertThrows(YormException.class, () -> Parser.parse("deadline hello"), "Error in deadline instruction");
-        assertThrows(YormException.class, () -> Parser.parse("deadline hello /by invalidDate"), "Error in deadline instruction");
+        assertThrows(YormException.class, () ->
+            Parser.parse("deadline hello /by invalidDate"), "Error in deadline instruction");
     }
 
     @Test
     public void parser_invalidEvent_exceptionThrown() {
         assertThrows(YormException.class, () -> Parser.parse("event hello"), "Error in event instruction");
-        assertThrows(YormException.class, () -> Parser.parse("event hello /from invalidDate /to 2026-08-07"), "Error in deadline instruction");
-        assertThrows(YormException.class, () -> Parser.parse("event hello /from 2026-08-07 /to invalidDate"), "Error in deadline instruction");
+        assertThrows(YormException.class, () ->
+            Parser.parse("event hello /from invalidDate /to 2026-08-07"), "Error in deadline instruction");
+        assertThrows(YormException.class, () -> Parser.parse(
+                "event hello /from 2026-08-07 /to invalidDate"
+        ), "Error in deadline instruction");
     }
 }

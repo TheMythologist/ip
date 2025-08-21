@@ -10,6 +10,9 @@ import java.util.Scanner;
 import yorm.exception.YormException;
 import yorm.task.Task;
 
+/**
+ * Handles the loading and storing of tasks to the disk/filesystem.
+ */
 public class Storage {
     /** The save file location */
     private final String filePath;
@@ -20,7 +23,7 @@ public class Storage {
 
     /**
      * Loads the tasks from the filepath.
-     * 
+     *
      * @return The tasks loaded from the save file.
      * @throws YormException If an error occurs during loading of the save file.
      */
