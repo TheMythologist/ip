@@ -7,7 +7,7 @@ import java.time.format.DateTimeParseException;
 import yorm.exception.YormException;
 
 public abstract class Task {
-    protected String description;
+    public final String description;
     protected boolean isDone;
 
     public Task(String description) {

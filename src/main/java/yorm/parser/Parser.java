@@ -7,6 +7,7 @@ import yorm.command.AddCommand;
 import yorm.command.Command;
 import yorm.command.DeleteCommand;
 import yorm.command.ExitCommand;
+import yorm.command.FindCommand;
 import yorm.command.ListCommand;
 import yorm.command.MarkCommand;
 import yorm.exception.YormException;
@@ -75,6 +76,9 @@ public class Parser {
             } catch (NumberFormatException e) {
                 throw new YormException("Error in unmark instruction");
             }
+        } else if (command.startsWith("find ")) {
+            String keyword = removePrefix(command, "find ");
+            return new FindCommand(keyword);
         } else {
             Task task;
             if (command.startsWith("todo ")) {

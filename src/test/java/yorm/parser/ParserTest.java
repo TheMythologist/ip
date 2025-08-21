@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import yorm.command.Command;
 import yorm.command.ExitCommand;
+import yorm.command.FindCommand;
 import yorm.command.ListCommand;
 import yorm.command.MarkCommand;
 import yorm.exception.YormException;
@@ -57,6 +58,12 @@ public class ParserTest {
     public void testUnmark() {
         Command command = assertDoesNotThrow(() -> Parser.parse("unmark 1"));
         assertEquals(command, new MarkCommand(0, false));
+    }
+
+    @Test
+    public void testFind() {
+        Command command = assertDoesNotThrow(() -> Parser.parse("find task"));
+        assertEquals(command, new FindCommand("task"));
     }
 
     @Test

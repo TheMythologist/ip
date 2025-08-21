@@ -71,6 +71,20 @@ public class Ui implements AutoCloseable {
         System.out.println(task);
     }
 
+    public void showFoundTasks(TaskList foundTasks) {
+        if (foundTasks.size() == 0) {
+            System.out.println("Could not find any matching tasks!");
+            return;
+        }
+
+        System.out.println("Here are the matching tasks in your list:");
+        int counter = 1;
+        for (Task task : foundTasks) {
+            System.out.printf("%d.%s%n", counter, task);
+            counter++;
+        }
+    }
+
     public String readCommand() {
         return s.nextLine();
     }
