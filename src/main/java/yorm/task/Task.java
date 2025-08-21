@@ -40,25 +40,25 @@ public abstract class Task {
         try {
 
             switch (split[0]) {
-                case "T" -> {
-                    if (split.length != 3) {
-                        throw new YormException("Invalid todo save string");
-                    }
-                    task = new Todo(split[2]);
+            case "T" -> {
+                if (split.length != 3) {
+                    throw new YormException("Invalid todo save string");
                 }
-                case "D" -> {
-                    if (split.length != 4) {
-                        throw new YormException("Invalid deadline save string");
-                    }
-                    task = new Deadline(split[2], LocalDate.parse(split[3]));
+                task = new Todo(split[2]);
+            }
+            case "D" -> {
+                if (split.length != 4) {
+                    throw new YormException("Invalid deadline save string");
                 }
-                case "E" -> {
-                    if (split.length != 5) {
-                        throw new YormException("Invalid event save string");
-                    }
-                    task = new Event(split[2], LocalDate.parse(split[3]), LocalDate.parse(split[4]));
+                task = new Deadline(split[2], LocalDate.parse(split[3]));
+            }
+            case "E" -> {
+                if (split.length != 5) {
+                    throw new YormException("Invalid event save string");
                 }
-                case null, default -> throw new YormException("Invalid save string");
+                task = new Event(split[2], LocalDate.parse(split[3]), LocalDate.parse(split[4]));
+            }
+            case null, default -> throw new YormException("Invalid save string");
             }
         } catch (DateTimeParseException _) {
             throw new YormException("Invalid save string");

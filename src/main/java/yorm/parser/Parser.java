@@ -37,7 +37,7 @@ public class Parser {
             try {
                 int index = Integer.parseInt(split[1]);
                 if (index < 1) {
-                    throw new YormException("Error in mark instruction");
+                    throw new YormException("Error in delete instruction");
                 }
                 return new DeleteCommand(index - 1);
             } catch (NumberFormatException e) {
@@ -69,7 +69,7 @@ public class Parser {
             try {
                 index = Integer.parseInt(split[1]);
                 if (index < 1) {
-                    throw new YormException("Error in mark instruction");
+                    throw new YormException("Error in unmark instruction");
                 }
                 return new MarkCommand(index - 1, false);
             } catch (NumberFormatException e) {

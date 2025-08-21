@@ -2,17 +2,17 @@ package yorm.task;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TodoTest {
     @Test
-    public void testStrings() {
+    public void todo_creation_correctStrings() {
         Todo todo = new Todo("read book");
-        assertEquals(todo.toString(), "[T][ ] read book");
-        assertEquals(todo.toSaveString(), "T | 0 | read book");
+        assertEquals("[T][ ] read book", todo.toString());
+        assertEquals("T | 0 | read book", todo.toSaveString());
 
         todo.markAsDone();
-        assertEquals(todo.toString(), "[T][X] read book");
-        assertEquals(todo.toSaveString(), "T | 1 | read book");
+        assertEquals("[T][X] read book", todo.toString());
+        assertEquals("T | 1 | read book", todo.toSaveString());
     }
 }

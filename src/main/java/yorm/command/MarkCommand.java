@@ -7,8 +7,8 @@ import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
 public class MarkCommand extends Command {
-    public final int taskIndex;
-    public final boolean done;
+    protected final int taskIndex;
+    protected final boolean done;
 
     public MarkCommand(int taskIndex, boolean done) {
         this.taskIndex = taskIndex;
