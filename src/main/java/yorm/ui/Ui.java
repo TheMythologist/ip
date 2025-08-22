@@ -1,7 +1,9 @@
 package yorm.ui;
 
+import java.io.PrintStream;
 import java.util.Scanner;
 
+import yorm.exception.YormException;
 import yorm.task.Task;
 import yorm.tasklist.TaskList;
 
@@ -13,7 +15,11 @@ public class Ui implements AutoCloseable {
 
     @Override
     public void close() {
-        s.close();
+        this.s.close();
+    }
+
+    public void setOut(PrintStream stream) {
+        System.setOut(stream);
     }
 
     /**
@@ -40,12 +46,22 @@ public class Ui implements AutoCloseable {
     }
 
     /**
+     * Returns the error message to be printed to Stdout.
+     *
+     * @param e The caught exception.
+     * @return The error message to be printed to Stdout.
+     */
+    public String getErrorMessage(YormException e) {
+        return String.format("YormError: %s", e.getMessage());
+    }
+
+    /**
      * Prints the error message to Stdout.
      *
-     * @param string The error message.
+     * @param e The caught exception.
      */
-    public void showError(String string) {
-        System.out.printf("YormError: %s%n", string);
+    public void showError(YormException e) {
+        System.out.println(this.getErrorMessage(e));
     }
 
     /**
@@ -148,6 +164,6 @@ public class Ui implements AutoCloseable {
      * @return The command string retrieved from Stdin.
      */
     public String readCommand() {
-        return s.nextLine();
+        return this.s.nextLine();
     }
 }
