@@ -71,7 +71,7 @@ public class Yorm {
     }
 
     public static void main(String[] args) {
-        new Yorm("data/yorm.txt").run();
+        new Yorm().run();
     }
 
     /**
