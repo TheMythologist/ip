@@ -52,16 +52,16 @@ public class DialogBox extends HBox {
 
     private void changeDialogStyle(CommandEnum commandType) {
         switch (commandType) {
-        case CommandEnum.AddCommand:
+        case AddCommand:
             this.dialog.getStyleClass().add("add-label");
             break;
-        case CommandEnum.MarkCommand:
+        case MarkCommand:
             this.dialog.getStyleClass().add("marked-label");
             break;
-        case CommandEnum.DeleteCommand:
+        case DeleteCommand:
             this.dialog.getStyleClass().add("delete-label");
             break;
-        case CommandEnum.YormException:
+        case YormException:
             this.dialog.getStyleClass().add("error-label");
             break;
         default:
