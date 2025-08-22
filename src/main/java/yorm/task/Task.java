@@ -75,7 +75,6 @@ public abstract class Task {
         Task task;
         String[] split = string.split(" \\| ");
         try {
-
             switch (split[0]) {
             case "T" -> {
                 if (split.length != 3) {

@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import yorm.command.Command;
+import yorm.enums.CommandEnum;
 import yorm.exception.YormException;
 import yorm.parser.Parser;
 import yorm.storage.Storage;
@@ -91,7 +92,11 @@ public class Yorm {
         }
     }
 
-    public String getCommandType() {
-        return this.commandType;
+    public CommandEnum getCommandType() {
+        try {
+            return CommandEnum.valueOf(this.commandType);
+        } catch (IllegalArgumentException e) {
+            return CommandEnum.Default;
+        }
     }
 }
