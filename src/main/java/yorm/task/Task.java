@@ -94,6 +94,12 @@ public abstract class Task {
                 }
                 task = new Event(split[2], LocalDate.parse(split[3]), LocalDate.parse(split[4]));
             }
+            case "A" -> {
+                if (split.length != 4) {
+                    throw new YormException("Invalid after save string");
+                }
+                task = new After(split[2], LocalDate.parse(split[3]));
+            }
             default -> throw new YormException("Invalid save string");
             }
         } catch (DateTimeParseException e) {

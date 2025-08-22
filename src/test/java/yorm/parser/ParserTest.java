@@ -16,6 +16,7 @@ import yorm.command.FindCommand;
 import yorm.command.ListCommand;
 import yorm.command.MarkCommand;
 import yorm.exception.YormException;
+import yorm.task.After;
 import yorm.task.Deadline;
 import yorm.task.Event;
 import yorm.task.Todo;
@@ -42,6 +43,13 @@ public class ParserTest {
             LocalDate.of(2026, 8, 6),
             LocalDate.of(2026, 8, 7)
         )), command);
+    }
+
+    @Test
+    public void parser_addAfter_correctCommand() {
+        Command command = assertDoesNotThrow(() ->
+            Parser.parse("after return book /after 2026-08-06"));
+        assertEquals(new AddCommand(new After("return book", LocalDate.of(2026, 8, 6))), command);
     }
 
     @Test
@@ -121,5 +129,12 @@ public class ParserTest {
         assertThrows(YormException.class, () -> Parser.parse(
                 "event hello /from 2026-08-07 /to invalidDate"
         ), "Error in deadline instruction");
+    }
+
+    @Test
+    public void parser_invalidAfter_exceptionThrown() {
+        assertThrows(YormException.class, () -> Parser.parse("after hello"), "Error in after instruction");
+        assertThrows(YormException.class, () ->
+            Parser.parse("after hello /after invalidDate"), "Error in after instruction");
     }
 }

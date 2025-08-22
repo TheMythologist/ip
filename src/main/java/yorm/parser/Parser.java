@@ -11,6 +11,7 @@ import yorm.command.FindCommand;
 import yorm.command.ListCommand;
 import yorm.command.MarkCommand;
 import yorm.exception.YormException;
+import yorm.task.After;
 import yorm.task.Deadline;
 import yorm.task.Event;
 import yorm.task.Task;
@@ -129,6 +130,17 @@ public class Parser {
                     task = new Event(split[0], LocalDate.parse(split2[0]), LocalDate.parse(split2[1]));
                 } catch (DateTimeParseException e) {
                     throw new YormException("Error in event instruction");
+                }
+            } else if (command.startsWith("after ")) {
+                String toParse = removePrefix(command, "after ");
+                String[] split = toParse.split(" /after ");
+                if (split.length != 2) {
+                    throw new YormException("Error in after instruction");
+                }
+                try {
+                    task = new After(split[0], LocalDate.parse(split[1]));
+                } catch (DateTimeParseException e) {
+                    throw new YormException("Error in after instruction");
                 }
             } else {
                 throw new YormException("Invalid instruction");
