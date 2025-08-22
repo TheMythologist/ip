@@ -36,6 +36,8 @@ public class MarkCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws YormException {
+        assert this.taskIndex > 0;
+
         Task task;
         try {
             task = tasks.get(this.taskIndex);
