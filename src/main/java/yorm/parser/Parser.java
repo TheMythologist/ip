@@ -58,6 +58,7 @@ public class Parser {
                 if (index < 1) {
                     throw new YormException("Error in delete instruction");
                 }
+                assert index > 0;
                 return new DeleteCommand(index - 1);
             } catch (NumberFormatException e) {
                 throw new YormException("Error in delete instruction");
@@ -74,6 +75,7 @@ public class Parser {
                 if (index < 1) {
                     throw new YormException("Error in mark instruction");
                 }
+                assert index > 0;
                 return new MarkCommand(index - 1, true);
             } catch (NumberFormatException e) {
                 throw new YormException("Error in mark instruction");
@@ -90,6 +92,7 @@ public class Parser {
                 if (index < 1) {
                     throw new YormException("Error in unmark instruction");
                 }
+                assert index > 0;
                 return new MarkCommand(index - 1, false);
             } catch (NumberFormatException e) {
                 throw new YormException("Error in unmark instruction");

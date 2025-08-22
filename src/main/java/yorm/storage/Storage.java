@@ -52,11 +52,13 @@ public class Storage {
             if (parentDir != null && !parentDir.exists()) {
                 parentDir.mkdirs();
             }
+            assert parentDir.exists();
             FileWriter fileWriter = new FileWriter(this.filePath);
             for (Task task : tasks) {
                 fileWriter.write(String.format("%s\n", task.toSaveString()));
             }
             fileWriter.close();
+            assert file.exists();
         } catch (IOException e) {
             System.out.println("Error saving to file");
         }
