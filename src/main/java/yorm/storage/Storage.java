@@ -37,7 +37,7 @@ public class Storage {
                 tasks.add(Task.fromSaveString(taskString));
             }
             return tasks;
-        } catch (FileNotFoundException _) {
+        } catch (FileNotFoundException e) {
             return new ArrayList<>();
         }
     }

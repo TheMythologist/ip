@@ -51,7 +51,7 @@ public class DialogBox extends HBox {
     }
 
     private void changeDialogStyle(CommandEnum commandType) {
-        switch(commandType) {
+        switch (commandType) {
         case CommandEnum.AddCommand:
             this.dialog.getStyleClass().add("add-label");
             break;
