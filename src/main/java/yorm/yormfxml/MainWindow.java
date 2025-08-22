@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import yorm.enums.CommandEnum;
 import yorm.yormjava.Yorm;
 
 /**
@@ -45,7 +46,7 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = yorm.getResponse(input);
-        String commandType = yorm.getCommandType();
+        CommandEnum commandType = yorm.getCommandType();
         this.dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, this.userImage),
                 DialogBox.getYormDialog(response, this.yormImage, commandType)

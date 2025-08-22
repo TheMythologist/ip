@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import yorm.enums.CommandEnum;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -49,19 +50,19 @@ public class DialogBox extends HBox {
         this.dialog.getStyleClass().add("reply-label");
     }
 
-    private void changeDialogStyle(String commandType) {
+    private void changeDialogStyle(CommandEnum commandType) {
         switch(commandType) {
-        case "AddCommand":
-            dialog.getStyleClass().add("add-label");
+        case CommandEnum.AddCommand:
+            this.dialog.getStyleClass().add("add-label");
             break;
-        case "ChangeMarkCommand":
-            dialog.getStyleClass().add("marked-label");
+        case CommandEnum.MarkCommand:
+            this.dialog.getStyleClass().add("marked-label");
             break;
-        case "DeleteCommand":
-            dialog.getStyleClass().add("delete-label");
+        case CommandEnum.DeleteCommand:
+            this.dialog.getStyleClass().add("delete-label");
             break;
-        case "YormException":
-            dialog.getStyleClass().add("error-label");
+        case CommandEnum.YormException:
+            this.dialog.getStyleClass().add("error-label");
             break;
         default:
             // Do nothing
@@ -72,7 +73,7 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getYormDialog(String text, Image img, String commandType) {
+    public static DialogBox getYormDialog(String text, Image img, CommandEnum commandType) {
         var db = new DialogBox(text, img);
         db.flip();
         db.changeDialogStyle(commandType);
