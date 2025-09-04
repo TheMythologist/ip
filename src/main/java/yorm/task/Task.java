@@ -1,11 +1,6 @@
 package yorm.task;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.Objects;
-
-import yorm.exception.YormException;
 
 /**
  * Base abstract class for all tasks to extend from.
