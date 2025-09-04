@@ -1,14 +1,14 @@
 package yorm.storage;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import yorm.exception.YormException;
-import yorm.task.Task;
+import yorm.tasklist.TaskList;
 
 /**
  * Handles the loading and storing of tasks to the disk/filesystem.
@@ -27,37 +27,35 @@ public class Storage {
      * @return The tasks loaded from the save file.
      * @throws YormException If an error occurs during loading of the save file.
      */
-    public ArrayList<Task> load() throws YormException {
-        File file = new File(this.filePath);
-
-        try (Scanner reader = new Scanner(file)) {
-            ArrayList<Task> tasks = new ArrayList<>();
-            while (reader.hasNextLine()) {
-                String taskString = reader.nextLine();
-                tasks.add(Task.fromSaveString(taskString));
+    public TaskList load() throws YormException {
+        try (FileInputStream streamIn = new FileInputStream(this.filePath)) {
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(streamIn)) {
+                TaskList tasks = (TaskList) objectInputStream.readObject();
+                return tasks;
             }
-            return tasks;
-        } catch (FileNotFoundException e) {
-            return new ArrayList<>();
+        } catch (Exception e) {
+            return new TaskList();
         }
     }
 
     /**
-     * Save the tasks into the filepath
+     * Save the tasks into the filepath.
      */
-    public void save(ArrayList<Task> tasks) {
+    public void save(TaskList tasks) {
         try {
+            // Ensure directory exists
             File file = new File(this.filePath);
             File parentDir = file.getParentFile();
             if (parentDir != null && !parentDir.exists()) {
                 parentDir.mkdirs();
             }
             assert parentDir.exists();
-            FileWriter fileWriter = new FileWriter(this.filePath);
-            for (Task task : tasks) {
-                fileWriter.write(String.format("%s\n", task.toSaveString()));
+
+            try (FileOutputStream fout = new FileOutputStream(this.filePath)) {
+                try (ObjectOutputStream oos = new ObjectOutputStream(fout)) {
+                    oos.writeObject(tasks);
+                }
             }
-            fileWriter.close();
             assert file.exists();
         } catch (IOException e) {
             System.out.println("Error saving to file");

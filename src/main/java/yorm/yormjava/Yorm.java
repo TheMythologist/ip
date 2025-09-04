@@ -15,7 +15,7 @@ import yorm.ui.Ui;
  * Base chatbot application.
  */
 public class Yorm {
-    private static final String DEFAULT_FILE_PATH = "data/yorm.txt";
+    private static final String DEFAULT_FILE_PATH = "data/yorm.bin";
 
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
     private final PrintStream redirectedStream = new PrintStream(this.buffer);

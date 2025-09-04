@@ -22,11 +22,6 @@ public class After extends Task {
     }
 
     @Override
-    public String toSaveString() {
-        return String.format("A | %d | %s | %s", this.isDone ? 1 : 0, this.description, this.after);
-    }
-
-    @Override
     public String toString() {
         return String.format("[A]%s (after: %s)",
                 super.toString(),

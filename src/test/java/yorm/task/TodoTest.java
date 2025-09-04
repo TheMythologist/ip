@@ -9,10 +9,8 @@ public class TodoTest {
     public void todo_creation_correctStrings() {
         Todo todo = new Todo("read book");
         assertEquals("[T][ ] read book", todo.toString());
-        assertEquals("T | 0 | read book", todo.toSaveString());
 
         todo.markAsDone();
         assertEquals("[T][X] read book", todo.toString());
-        assertEquals("T | 1 | read book", todo.toSaveString());
     }
 }
