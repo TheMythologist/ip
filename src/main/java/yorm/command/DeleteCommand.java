@@ -24,7 +24,7 @@ public class DeleteCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws YormException {
-        assert this.taskIndex > 0;
+        assert this.taskIndex > 0 : "Task index should be positive";
 
         Task task;
         try {

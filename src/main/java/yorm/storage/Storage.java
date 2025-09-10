@@ -49,14 +49,14 @@ public class Storage {
             if (parentDir != null && !parentDir.exists()) {
                 parentDir.mkdirs();
             }
-            assert parentDir.exists();
+            assert parentDir.exists() : "Parent directory should exist";
 
             try (FileOutputStream fout = new FileOutputStream(this.filePath)) {
                 try (ObjectOutputStream oos = new ObjectOutputStream(fout)) {
                     oos.writeObject(tasks);
                 }
             }
-            assert file.exists();
+            assert file.exists(): "File should exist";
         } catch (IOException e) {
             System.out.println("Error saving to file");
         }
