@@ -21,8 +21,8 @@ public class MarkCommand extends Command {
      * as either done or not done.
      *
      * @param taskIndex Index of task to be marked.
-     * @param done {@code true} If the task should be marked as done,
-     *             {@code false} if it should be marked as not done.
+     * @param done      {@code true} If the task should be marked as done,
+     *                  {@code false} if it should be marked as not done.
      */
     public MarkCommand(int taskIndex, boolean done) {
         this.taskIndex = taskIndex;

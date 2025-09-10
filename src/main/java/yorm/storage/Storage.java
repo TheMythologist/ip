@@ -56,7 +56,7 @@ public class Storage {
                     oos.writeObject(tasks);
                 }
             }
-            assert file.exists(): "File should exist";
+            assert file.exists() : "File should exist";
         } catch (IOException e) {
             System.out.println("Error saving to file");
         }

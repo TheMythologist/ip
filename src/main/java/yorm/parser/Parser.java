@@ -25,7 +25,7 @@ public class Parser {
      * Helper function to remove a prefix from a string.
      * If the string does not start with the prefix, the same string is returned.
      *
-     * @param s The string to remove the prefix from.
+     * @param s      The string to remove the prefix from.
      * @param prefix The prefix to be removed.
      * @return The string after prefix removal.
      */
