@@ -30,7 +30,7 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     public void initialize() {
-        scrollPane.vvalueProperty().bind(this.dialogContainer.heightProperty());
+        this.dialogContainer.heightProperty().addListener((obs, oldVal, newVal) -> this.scrollPane.setVvalue(1.0));
     }
 
     /** Injects the Yorm instance */
