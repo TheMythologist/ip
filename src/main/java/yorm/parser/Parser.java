@@ -37,6 +37,148 @@ public class Parser {
     }
 
     /**
+     * Parses a delete command string and returns the delete command to be executed.
+     *
+     * @param command The string to be parsed into a delete command.
+     * @return The delete command for the application to execute.
+     * @throws YormException If an error occurs during parsing of the string.
+     */
+    private static DeleteCommand parseDeleteCommand(String command) throws YormException {
+        String[] split = command.split(" ", 2);
+        if (split.length != 2) {
+            throw new YormException("Error in delete instruction");
+        }
+
+        try {
+            int index = Integer.parseInt(split[1]);
+            if (index < 1) {
+                throw new YormException("Error in delete instruction");
+            }
+            assert index > 0 : "Index should be positive";
+            return new DeleteCommand(index - 1);
+        } catch (NumberFormatException e) {
+            throw new YormException("Error in delete instruction");
+        }
+    }
+
+    /**
+     * Parses a mark command string and returns the mark command to be executed.
+     *
+     * @param command The string to be parsed into a mark command.
+     * @return The mark command for the application to execute.
+     * @throws YormException If an error occurs during parsing of the string.
+     */
+    private static MarkCommand parseMarkCommand(String command) throws YormException {
+        String[] split = command.split(" ", 2);
+        if (split.length != 2) {
+            throw new YormException("Error in mark instruction");
+        }
+
+        int index;
+        try {
+            index = Integer.parseInt(split[1]);
+            if (index < 1) {
+                throw new YormException("Error in mark instruction");
+            }
+            assert index > 0 : "Index should be positive";
+            return new MarkCommand(index - 1, true);
+        } catch (NumberFormatException e) {
+            throw new YormException("Error in mark instruction");
+        }
+    }
+
+    /**
+     * Parses an unmark command string and returns the unmark command to be
+     * executed.
+     *
+     * @param command The string to be parsed into an unmark command.
+     * @return The unmark command for the application to execute.
+     * @throws YormException If an error occurs during parsing of the string.
+     */
+    private static MarkCommand parseUnmarkCommand(String command) throws YormException {
+        String[] split = command.split(" ", 2);
+        if (split.length != 2) {
+            throw new YormException("Error in unmark instruction");
+        }
+
+        int index;
+        try {
+            index = Integer.parseInt(split[1]);
+            if (index < 1) {
+                throw new YormException("Error in unmark instruction");
+            }
+            assert index > 0 : "Index should be positive";
+            return new MarkCommand(index - 1, false);
+        } catch (NumberFormatException e) {
+            throw new YormException("Error in unmark instruction");
+        }
+    }
+
+    /**
+     * Parses a deadline task string and returns the deadline task to be added.
+     *
+     * @param command The string to be parsed into a deadline task.
+     * @return The deadline task for the application to add.
+     * @throws YormException If an error occurs during parsing of the string.
+     */
+    private static Deadline parseDeadlineTask(String command) throws YormException {
+        String toParse = removePrefix(command, "deadline ");
+        String[] split = toParse.split(" /by ", 2);
+        if (split.length != 2) {
+            throw new YormException("Error in deadline instruction");
+        }
+        try {
+            return new Deadline(split[0], LocalDate.parse(split[1]));
+        } catch (DateTimeParseException e) {
+            throw new YormException("Error in deadline instruction");
+        }
+    }
+
+    /**
+     * Parses an event task string and returns the event task to be added.
+     *
+     * @param command The string to be parsed into an event task.
+     * @return The event task for the application to add.
+     * @throws YormException If an error occurs during parsing of the string.
+     */
+    private static Event parseEventTask(String command) throws YormException {
+        String toParse = removePrefix(command, "event ");
+        String[] split = toParse.split(" /from ", 2);
+        if (split.length != 2) {
+            throw new YormException("Error in event instruction");
+        }
+        String[] split2 = split[1].split(" /to ", 2);
+        if (split2.length != 2) {
+            throw new YormException("Error in event instruction");
+        }
+        try {
+            return new Event(split[0], LocalDate.parse(split2[0]), LocalDate.parse(split2[1]));
+        } catch (DateTimeParseException e) {
+            throw new YormException("Error in event instruction");
+        }
+    }
+
+    /**
+     * Parses an after task string and returns the after task to be added.
+     *
+     * @param command The string to be parsed into an after task.
+     * @return The after task for the application to add.
+     * @throws YormException If an error occurs during parsing of the string.
+     */
+    private static After parseAfterTask(String command) throws YormException {
+        String toParse = removePrefix(command, "after ");
+        String[] split = toParse.split(" /after ", 2);
+        if (split.length != 2) {
+            throw new YormException("Error in after instruction");
+        }
+        try {
+            return new After(split[0], LocalDate.parse(split[1]));
+        } catch (DateTimeParseException e) {
+            throw new YormException("Error in after instruction");
+        }
+    }
+
+    /**
      * Parses the string and returns the corresponding command to be executed.
      *
      * @param command The string to be parsed into a command.
@@ -49,99 +191,23 @@ public class Parser {
         } else if (command.equals("list")) {
             return new ListCommand();
         } else if (command.startsWith("delete ")) {
-            String[] split = command.split(" ");
-            if (split.length != 2) {
-                throw new YormException("Error in delete instruction");
-            }
-
-            try {
-                int index = Integer.parseInt(split[1]);
-                if (index < 1) {
-                    throw new YormException("Error in delete instruction");
-                }
-                assert index > 0 : "Index should be positive";
-                return new DeleteCommand(index - 1);
-            } catch (NumberFormatException e) {
-                throw new YormException("Error in delete instruction");
-            }
+            return Parser.parseDeleteCommand(command);
         } else if (command.startsWith("mark ")) {
-            String[] split = command.split(" ");
-            if (split.length != 2) {
-                throw new YormException("Error in mark instruction");
-            }
-
-            int index;
-            try {
-                index = Integer.parseInt(split[1]);
-                if (index < 1) {
-                    throw new YormException("Error in mark instruction");
-                }
-                assert index > 0 : "Index should be positive";
-                return new MarkCommand(index - 1, true);
-            } catch (NumberFormatException e) {
-                throw new YormException("Error in mark instruction");
-            }
+            return Parser.parseMarkCommand(command);
         } else if (command.startsWith("unmark ")) {
-            String[] split = command.split(" ");
-            if (split.length != 2) {
-                throw new YormException("Error in unmark instruction");
-            }
-
-            int index;
-            try {
-                index = Integer.parseInt(split[1]);
-                if (index < 1) {
-                    throw new YormException("Error in unmark instruction");
-                }
-                assert index > 0 : "Index should be positive";
-                return new MarkCommand(index - 1, false);
-            } catch (NumberFormatException e) {
-                throw new YormException("Error in unmark instruction");
-            }
+            return Parser.parseUnmarkCommand(command);
         } else if (command.startsWith("find ")) {
-            String keyword = removePrefix(command, "find ");
-            return new FindCommand(keyword);
+            return new FindCommand(removePrefix(command, "find "));
         } else {
             Task task;
             if (command.startsWith("todo ")) {
                 task = new Todo(removePrefix(command, "todo "));
             } else if (command.startsWith("deadline ")) {
-                String toParse = removePrefix(command, "deadline ");
-                String[] split = toParse.split(" /by ");
-                if (split.length != 2) {
-                    throw new YormException("Error in deadline instruction");
-                }
-                try {
-                    task = new Deadline(split[0], LocalDate.parse(split[1]));
-                } catch (DateTimeParseException e) {
-                    throw new YormException("Error in deadline instruction");
-                }
+                task = Parser.parseDeadlineTask(command);
             } else if (command.startsWith("event ")) {
-                String toParse = removePrefix(command, "event ");
-                String[] split = toParse.split(" /from ");
-                if (split.length != 2) {
-                    throw new YormException("Error in event instruction");
-                }
-                String[] split2 = split[1].split(" /to ");
-                if (split2.length != 2) {
-                    throw new YormException("Error in event instruction");
-                }
-                try {
-                    task = new Event(split[0], LocalDate.parse(split2[0]), LocalDate.parse(split2[1]));
-                } catch (DateTimeParseException e) {
-                    throw new YormException("Error in event instruction");
-                }
+                task = Parser.parseEventTask(command);
             } else if (command.startsWith("after ")) {
-                String toParse = removePrefix(command, "after ");
-                String[] split = toParse.split(" /after ");
-                if (split.length != 2) {
-                    throw new YormException("Error in after instruction");
-                }
-                try {
-                    task = new After(split[0], LocalDate.parse(split[1]));
-                } catch (DateTimeParseException e) {
-                    throw new YormException("Error in after instruction");
-                }
+                task = Parser.parseAfterTask(command);
             } else {
                 throw new YormException("Invalid instruction");
             }
