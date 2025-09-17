@@ -14,19 +14,19 @@ public class MarkCommand extends Command {
     protected final int taskIndex;
 
     /** Whether the task should be marked as done or not done */
-    protected final boolean done;
+    protected final boolean isDone;
 
     /**
      * Creates a new {@code MarkCommand} that will mark a specified task
      * as either done or not done.
      *
      * @param taskIndex Index of task to be marked.
-     * @param done      {@code true} If the task should be marked as done,
+     * @param isDone    {@code true} If the task should be marked as done,
      *                  {@code false} if it should be marked as not done.
      */
-    public MarkCommand(int taskIndex, boolean done) {
+    public MarkCommand(int taskIndex, boolean isDone) {
         this.taskIndex = taskIndex;
-        this.done = done;
+        this.isDone = isDone;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class MarkCommand extends Command {
             throw new YormException("Invalid task number");
         }
 
-        if (this.done) {
+        if (this.isDone) {
             task.markAsDone();
             ui.showMarkedTask(task);
         } else {
@@ -59,7 +59,7 @@ public class MarkCommand extends Command {
     public boolean equals(Object o) {
         if (super.equals(o)) {
             MarkCommand other = (MarkCommand) o;
-            return this.taskIndex == other.taskIndex && this.done == other.done;
+            return this.taskIndex == other.taskIndex && this.isDone == other.isDone;
         }
         return false;
     }
