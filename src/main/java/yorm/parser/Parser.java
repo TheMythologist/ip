@@ -197,7 +197,7 @@ public class Parser {
         } else if (command.startsWith("unmark ")) {
             return Parser.parseUnmarkCommand(command);
         } else if (command.startsWith("find ")) {
-            return new FindCommand(removePrefix(command, "find "));
+            return new FindCommand(removePrefix(command, "find ").split(" "));
         } else {
             Task task;
             if (command.startsWith("todo ")) {
