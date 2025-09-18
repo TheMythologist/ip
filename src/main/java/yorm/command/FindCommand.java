@@ -1,9 +1,10 @@
 package yorm.command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import yorm.storage.Storage;
-import yorm.task.Task;
 import yorm.tasklist.TaskList;
 import yorm.ui.Ui;
 
@@ -25,15 +26,10 @@ public class FindCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        TaskList found = new TaskList();
-        for (Task task : tasks) {
-            for (String keyword : keywords) {
-                if (task.getDescription().toLowerCase().contains(keyword)) {
-                    found.add(task);
-                    break;
-                }
-            }
-        }
+        TaskList found = (TaskList) tasks.stream()
+                .filter(task -> Arrays.asList(this.keywords).stream()
+                        .anyMatch(keyword -> task.getDescription().toLowerCase().contains(keyword)))
+                .collect(Collectors.toCollection(ArrayList::new));
 
         ui.showFoundTasks(found);
     }
