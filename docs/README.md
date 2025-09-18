@@ -1,6 +1,6 @@
 # YormBot User Guide
 
-![YormBot UI](./UI.png)
+![YormBot UI](./Ui.png)
 
 > "Yorm" ~YormBot
 
