@@ -89,6 +89,12 @@ public class ParserTest {
     }
 
     @Test
+    public void parser_multipleFind_correctCommand() {
+        Command command = assertDoesNotThrow(() -> Parser.parse("find task event"));
+        assertEquals(new FindCommand("task", "event"), command);
+    }
+
+    @Test
     public void parser_markInvalidNumber_exceptionThrown() {
         assertThrows(YormException.class, () -> Parser.parse("mark -1"), "Error in mark instruction");
         assertThrows(YormException.class, () -> Parser.parse("mark not a number"), "Error in mark instruction");
