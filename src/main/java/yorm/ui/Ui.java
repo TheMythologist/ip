@@ -26,23 +26,24 @@ public class Ui implements AutoCloseable {
      * Prints the welcome message to Stdout.
      */
     public void showWelcome() {
-        System.out.println("Hello! I'm Yorm!");
-        System.out.println("What can I do for you?");
+        System.out.println("✨ Hello! I'm Yorm — your tiny task assistant.");
+        System.out.println("Ask me to add, list, find, or remove tasks. I'm all ears!");
     }
 
     /**
      * Prints the goodbye message to Stdout.
      */
     public void showGoodbye() {
-        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println("Goodbye — you've got this! Come back when you need a hand.");
     }
 
     /**
      * Prints an empty line to Stdout.
-     * Commonly used to demarcate separations between user inputs and program outputs.
+     * Commonly used to demarcate separations between user inputs and program
+     * outputs.
      */
     public void showLine() {
-        System.out.println("____________________________________________________________");
+        System.out.println("────────────────────────────────────────────────────────────");
     }
 
     /**
@@ -52,7 +53,7 @@ public class Ui implements AutoCloseable {
      * @return The error message to be printed to Stdout.
      */
     public String getErrorMessage(YormException e) {
-        return String.format("YormError: %s", e.getMessage());
+        return String.format("YormError — oops: %s", e.getMessage());
     }
 
     /**
@@ -71,7 +72,7 @@ public class Ui implements AutoCloseable {
      * @param filePath The filepath of the save file.
      */
     public void showLoadingError(String filePath) {
-        System.out.printf("Error loading save from path %s%n", filePath);
+        System.out.printf("Oops — couldn't load save from: %s%n", filePath);
     }
 
     /**
@@ -81,7 +82,7 @@ public class Ui implements AutoCloseable {
      */
     public void showTasks(TaskList tasks) {
         if (tasks.isEmpty()) {
-            System.out.println("There are no tasks yet!");
+            System.out.println("Your task list is empty — time to get productive!");
             return;
         }
 
@@ -95,27 +96,27 @@ public class Ui implements AutoCloseable {
     /**
      * Prints the deleted task to Stdout.
      *
-     * @param task The deleted task.
+     * @param task  The deleted task.
      * @param tasks The remaining tasks.
      */
     public void showDeletedTask(Task task, TaskList tasks) {
         int taskSize = tasks.size();
         System.out.println("Noted. I've removed this task:");
         System.out.println(task);
-        System.out.printf("Now you have %d task%s in the list.%n", taskSize, taskSize == 1 ? "s" : "");
+        System.out.printf("Now you have %d task%s in the list.%n", taskSize, taskSize == 1 ? "" : "s");
     }
 
     /**
      * Prints the added task to Stdout.
      *
-     * @param task The added task.
+     * @param task  The added task.
      * @param tasks The list of tasks after addition.
      */
     public void showAddedTask(Task task, TaskList tasks) {
         int taskSize = tasks.size();
         System.out.println("Got it. I've added this task:");
         System.out.println(task);
-        System.out.printf("Now you have %d task%s in the list%n", taskSize, taskSize == 1 ? "s" : "");
+        System.out.printf("Now you have %d task%s in the list.%n", taskSize, taskSize == 1 ? "" : "s");
     }
 
     /**
@@ -124,7 +125,7 @@ public class Ui implements AutoCloseable {
      * @param task The marked task.
      */
     public void showMarkedTask(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
+        System.out.println("Nice! ✅ I've marked this task as done:");
         System.out.println(task);
     }
 
@@ -134,7 +135,7 @@ public class Ui implements AutoCloseable {
      * @param task The unmarked task.
      */
     public void showUnmarkedTask(Task task) {
-        System.out.println("Nice! I've marked this task as not done yet:");
+        System.out.println("Okay, I've marked this task as not done yet:");
         System.out.println(task);
     }
 
@@ -146,11 +147,11 @@ public class Ui implements AutoCloseable {
      */
     public void showFoundTasks(TaskList foundTasks) {
         if (foundTasks.isEmpty()) {
-            System.out.println("Could not find any matching tasks!");
+            System.out.println("No matches found — try a different keyword.");
             return;
         }
 
-        System.out.println("Here are the matching tasks in your list:");
+        System.out.println("Here are the matching tasks I found:");
         int counter = 1;
         for (Task task : foundTasks) {
             System.out.printf("%d.%s%n", counter, task);
